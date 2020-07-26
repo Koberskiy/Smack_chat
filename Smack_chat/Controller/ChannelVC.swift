@@ -24,6 +24,10 @@ class ChannelVC: UIViewController {
                                                name: NOTIF_USER_DATA_DID_CHANGE, object: nil)
     }
     
+    override func viewDidAppear(_ animated: Bool) {
+        setUpUserInfo()
+    }
+    
     @IBAction func loginBtnPressed(_ sender: Any) {
         if AuthService.instance.isLoggin {
             let profile = ProfileVC()
@@ -35,6 +39,10 @@ class ChannelVC: UIViewController {
     }
     
     @objc func userDataDidChange(_ notif: Notification) {
+        setUpUserInfo()
+    }
+    
+    func setUpUserInfo() {
         if AuthService.instance.isLoggin {
             loginBtn.setTitle(UserDataService.instance.name, for: .normal)
             userImg.image = UIImage(named: UserDataService.instance.avatarName)
@@ -42,7 +50,7 @@ class ChannelVC: UIViewController {
         } else {
             loginBtn.setTitle("Login", for: .normal)
             userImg.image = UIImage(named: "menuProfileIcon")
-            userImg.backgroundColor = UIColor.clear 
+            userImg.backgroundColor = UIColor.clear
         }
     }
     
